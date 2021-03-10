@@ -1,0 +1,33 @@
+
+surface_number: 5
+
+surface_1:
+  color: {6, 206, 29}
+  tranparency: 0 
+  constant: {0.001106, 0.05335}
+  power: {1.966, 0.2968}
+
+surface_2: 
+  color: {70, 76, 194}
+  tranparency: 0
+  constant: {0.001507, 0.0843}
+  power: {1.526, 0.3572}
+
+surface_3: 
+  color: {26, 27, 45}
+  tranparency: 90
+  constant: {0.03485, 0.1851}
+  power: {1.497, 0.2523}
+
+surface_4: 
+  color: {152, 67, 200}
+  tranparency: 0
+  constant: {0.001082, 0.01455}
+  power: {1.245, 0.4688}
+
+surface_5: 
+  color: {1, 60, 44}
+  tranparency: 0
+  constant: {0.001552, 0.00654}
+  power: {0.997, 0.4292}
+
