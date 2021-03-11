@@ -51,23 +51,8 @@ float gaussianRandom(float average, float stdev);
 class ImageConverter
 {
   ros::NodeHandle nh_;
-  ros::NodeHandle nh;
-  nh.param("surface_number",surface_num);
-  nh.param("surface_1/color",color[1],{0,0,0});
-  nh.param("surface_1/constant",constant[1],{0,0});
-  nh.param("surface_1/power",power[1],{0,0});
-  nh.param("surface_2/color",color[2],{0,0,0});
-  nh.param("surface_2/constant",constant[2],{0,0});
-  nh.param("surface_2/power",power[2],{0,0});
-  nh.param("surface_3/color",color[3],{0,0,0});
-  nh.param("surface_3/constant",constant[3],{0,0});
-  nh.param("surface_3/power",power[3],{0,0});
-  nh.param("surface_4/color",color[4],{0,0,0});
-  nh.param("surface_4/constant",constant[4],{0,0});
-  nh.param("surface_4/power",power[4],{0,0});
-  nh.param("surface_5/color",color[5],{0,0,0});
-  nh.param("surface_5/constant",constant[5],{0,0});
-  nh.param("surface_5/power",power[5],{0,0});
+  
+
   image_transport::ImageTransport it_;
   image_transport::Subscriber image_sub_;
   image_transport::Subscriber image_sub_seg_;
@@ -76,6 +61,7 @@ class ImageConverter
   cv::Mat img_original_ptr;
   cv::Mat img_old_ptr;
 public:
+
   ImageConverter()
     : it_(nh_)
   {
@@ -193,6 +179,41 @@ float gaussianRandom(float average, float stdev) {
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "image_converter");
+  ros::NodeHandle nh;
+  int a, r, g, b, tranparency; // 임의로 지정했습니다.
+  float constant_f, power_f; 
+  nh.getParam("surface_number",surface_num); //surface 개수
+  nh.getParam("surface_1/color/r",r); // segmentation r g b 값
+  nh.getParam("surface_1/color/g",g);
+  nh.getParam("surface_1/color/b",b); 
+  nh.getParam("surface_1/power",power_f); // 지수승
+  nh.getParam("surface_1/transparency",tranparency); //투명도 값 0부터 100사이
+  constant_f = 0.03796 / exp(power_f * 3); // power 값이 들어오면 constant 값 계산
+  nh.getParam("surface_2/color/r",r);
+  nh.getParam("surface_2/color/g",g);
+  nh.getParam("surface_2/color/b",b);
+  nh.getParam("surface_2/power",power_f);
+  nh.getParam("surface_2/transparency",tranparency);
+  constant_f = 0.03796 / exp(power_f * 3); // power 값이 들어오면 constant 값 계산
+  nh.getParam("surface_3/color/r",r);
+  nh.getParam("surface_3/color/g",g);
+  nh.getParam("surface_3/color/b",b);
+  nh.getParam("surface_3/power",power_f);
+  nh.getParam("surface_3/transparency",tranparency);
+  constant_f = 0.03796 / exp(power_f * 3); // power 값이 들어오면 constant 값 계산
+  nh.getParam("surface_4/color/r",r);
+  nh.getParam("surface_4/color/g",g);
+  nh.getParam("surface_4/color/b",b);
+  nh.getParam("surface_4/power",power_f);
+  nh.getParam("surface_4/transparency",tranparency);
+  constant_f = 0.03796 / exp(power_f * 3); // power 값이 들어오면 constant 값 계산
+  nh.getParam("surface_5/color/r",r);
+  nh.getParam("surface_5/color/g",g);
+  nh.getParam("surface_5/color/b",b);
+  nh.getParam("surface_5/power",power_f);
+  nh.getParam("surface_5/transparency",tranparency);
+  constant_f = 0.03796 / exp(power_f * 3); // power 값이 들어오면 constant 값 계산
+
   srand((unsigned int)time(NULL));
   for(int i=0; i<5; i++) {
     for(int j=0; j<3; j++) {
