@@ -1,5 +1,5 @@
 
-surface_number: 5
+surface_number: 5 #number of mesh
 
 surface_1:
   color:  #rgb value of mesh segmentation
@@ -7,7 +7,7 @@ surface_1:
     g: 206
     b: 29
   transparency: 0 #tranparency 0~100(%) 
-  power: 1.966 
+  power: 1.966
 
 surface_2: 
   color:
