@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/ysteen/AirSim/ros/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/ysteen/AirSim/ros/src/airsim_ros_pkgs/include/**",
+        "/home/ysteen/catkin_ws/src/depth_noise/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

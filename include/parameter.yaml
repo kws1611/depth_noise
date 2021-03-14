@@ -3,41 +3,41 @@ surface_number: 5 #number of mesh
 
 surface_1:
   color:  #rgb value of mesh segmentation
-    r: 6
+    b: 6
     g: 206
-    b: 29
-  transparency: 0 #tranparency 0~100(%) 
+    r: 29
+  transparency: 50 #tranparency 0~100(%) 
   power: 1.966
 
 surface_2: 
   color:
-    r: 70
+    b: 70
     g: 76
-    b: 194
-  transparency: 0
+    r: 194
+  transparency: 50
   power: 1.526
 
 surface_3: 
   color:
-    r: 26
+    b: 26
     g: 27
-    b: 45
+    r: 45
   transparency: 90
   power: 1.497
 
 surface_4: 
   color:
-    r: 152
+    b: 152
     g: 67
-    b: 200
-  transparency: 0
+    r: 200
+  transparency: 50
   power: 1.245
 
 surface_5: 
   color:
-    r: 1
+    b: 1
     g: 60
-    b: 44
-  transparency: 0
+    r: 44
+  transparency: 50
   power: 0.997
 
