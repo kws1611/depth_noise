@@ -15,6 +15,8 @@
 int probability;
 int trans_rand; 
 int surface_num;
+int image_width;
+int image_height;
 
 struct parameter{
   int color[3];
@@ -81,8 +83,8 @@ public:
     if(Segmentation_ptr == NULL){
       return;
     }
-    for(int i=0; i<480; i++) {
-      for(int j=0; j<640; j++){
+    for(int i=0; i<image_height; i++) {
+      for(int j=0; j<image_width; j++){
         probability = rand() % 10000;
         trans_rand = rand() % 10000;
         uchar b = Segmentation_ptr->image.at<cv::Vec3b>(i,j)[0];
@@ -127,10 +129,10 @@ public:
         }
       }
     }
-    printf("ori_dist : %f\n", cv_ptr->image.at<float>(240,320));
+    printf("ori_dist : %f\n", cv_ptr->image.at<float>(200,200));
     printf("deviation : %f\n", deviation);
     if(!img_old_ptr.empty()){
-     printf("old_dist : %f\n", img_old_ptr.at<float>(240,320));
+     printf("old_dist : %f\n", img_old_ptr.at<float>(200,200));
     }
     // Output modified video stream
     //printf("%f\n", cv_ptr->image.at<float>(100,600));
@@ -180,7 +182,9 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "image_converter");
   ros::NodeHandle nh;
-  nh.getParam("surface_number",surface_num); //surface 개수
+  nh.getParam("/image_pub_cpp/surface_number",surface_num); //surface 개수
+  nh.getParam("/image_pub_cpp/image/height",image_height); //image 크기
+  nh.getParam("/image_pub_cpp/image/width",image_width); 
   nh.getParam("/image_pub_cpp/surface_1/color/b",seg_to_constant[0].color[0]); // segmentation r g b 값
   nh.getParam("/image_pub_cpp/surface_1/color/g",seg_to_constant[0].color[1]);
   nh.getParam("/image_pub_cpp/surface_1/color/r",seg_to_constant[0].color[2]); 
