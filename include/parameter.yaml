@@ -2,8 +2,8 @@
 surface_number: 5 #number of mesh
 
 image:
-  width: 300
-  height: 300
+  width: 480
+  height: 320
 
 surface_1:
   color:  #rgb value of mesh segmentation
