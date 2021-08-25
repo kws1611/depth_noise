@@ -66,7 +66,7 @@ public:
     : it_(nh_)
   {
     // Subscrive to input video feed and publish output video feed
-    image_sub_ = it_.subscribe("/airsim_node/drone_1/front_center_custom/DepthPlanar", 1, &ImageConverter::imageCb, this);
+    image_sub_ = it_.subscribe("/airsim_node/drone_1/front_center_custom/DepthPerspective", 1, &ImageConverter::imageCb, this);
     image_pub_ = it_.advertise("/simulation/depth_image", 1);
   }
   void imageCb(const sensor_msgs::ImageConstPtr& msg)
