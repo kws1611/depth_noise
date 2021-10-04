@@ -67,6 +67,7 @@ public:
   {
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe("/airsim_node/drone_1/front_center_custom/DepthPerspective", 1, &ImageConverter::imageCb, this);
+    //image_sub_ = it_.subscribe("/airsim_node/drone_1/front_center_custom/DepthPerspective", 1, &ImageConverter::imageCb, this);
     image_pub_ = it_.advertise("/simulation/depth_image", 1);
   }
   void imageCb(const sensor_msgs::ImageConstPtr& msg)
@@ -75,35 +76,44 @@ public:
     sensor_msgs::ImagePtr message;
     float deviation = 0; 
     float average ;
+    float count;
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::TYPE_32FC1);
     img_original_ptr = cv_ptr->image.clone();
-
-    for(int i=0; i<image_height; i++) {
-      for(int j=0; j<image_width; j++){
+    //printf("height : %d", image_height);
+    for(int i=0; i<320; i++) {
+      for(int j=0; j<480; j++){
+        //count = count +1;
+        //printf("for");
+        //printf("%d\n",i);
+        //printf("%d\n",j);
         probability = rand() % 10000;
         trans_rand = rand() % 10000;
-
+        //printf("average : %f\n", cv_ptr->image.at<float>(i,j));
         //fill-out error
         if(cv_ptr->image.at<float>(i,j) > 13. || probability < 10000*0.01) {
           cv_ptr->image.at<float>(i,j) = 0;
+          
         }
         else{
             // 노이즈 적용
             average = cv_ptr->image.at<float>(i,j);
+            //printf("average : %f\n", average);
             //printf("%f\n", average);
             if(average < 3.){
               deviation = 0.0014 * exp(1.1 * average);
+              //printf("deviation : %f\n", deviation);
               cv_ptr->image.at<float>(i,j) =  gaussianRandom(average, deviation);
               // cv_ptr->image.at<float>(i,j) =  gaussianRandom(average, seg_to_constant[k].constant[0] * exp(seg_to_constant[k].power[0]));
               // deviation = seg_to_constant[k].constant[0] * exp(seg_to_constant[k].power[0] * average);
             }
             else {
+              //deviation = seg_to_constant.constant * exp(seg_to_constant.power * average);
               deviation = seg_to_constant.constant * exp(seg_to_constant.power * average);
               cv_ptr->image.at<float>(i,j) = gaussianRandom(average, deviation);
               // cv_ptr->image.at<float>(i,j) =  gaussianRandom(average, seg_to_constant[k].constant[1] * exp(seg_to_constant[k].power[1]));
               // deviation = seg_to_constant[k].constant[1] * exp(seg_to_constant[k].power[1] * average);
             }
-            break;
+            //break;
           
           }
         }
@@ -111,6 +121,8 @@ public:
     
     printf("ori_dist : %f\n", cv_ptr->image.at<float>(200,200));
     printf("deviation : %f\n", deviation);
+    printf("count : %f\n", count);
+    count = 0;
     // Output modified video stream
     //printf("%f\n", cv_ptr->image.at<float>(100,600));
     // message = cv_bridge::CvImage(std_msgs::Header(), "32FC1", int_image).toImageMsg();
@@ -139,11 +151,12 @@ float gaussianRandom(float average, float stdev) {
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "image_converter");
+  //print("start");
   ros::NodeHandle nh;
-  nh.getParam("/image_pub_cpp/surface_number",surface_num); //surface 개수
-  nh.getParam("/image_pub_cpp/image/height",image_height); //image 크기
-  nh.getParam("/image_pub_cpp/image/width",image_width); 
-  nh.getParam("/image_pub_cpp/surface/power",seg_to_constant.power); // 지수승
+  nh.getParam("/surface_number",surface_num); //surface 개수
+  nh.getParam("/image/height",image_height); //image 크기
+  nh.getParam("/image/width",image_width); 
+  nh.getParam("/surface/power",seg_to_constant.power); // 지수승
   seg_to_constant.constant = 0.03796 / exp(seg_to_constant.power * 3); // power 값이 들어오면 constant 값 계산
 
   srand((unsigned int)time(NULL));

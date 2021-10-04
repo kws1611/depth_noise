@@ -1,6 +1,7 @@
 <launch>
-    <node name="image_pub" pkg="depth_noise" type="image_simple" output="screen">
+    
       <rosparam command="load" file="$(find depth_noise)/include/parameter_simple.yaml" />
+      <node name="image_pub" pkg="depth_noise" type="image_simple" output="screen">
     </node>
 </launch>
 
