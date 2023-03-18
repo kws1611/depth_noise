@@ -74,11 +74,13 @@ public:
   {
     cv_bridge::CvImagePtr cv_ptr;
     sensor_msgs::ImagePtr message;
-    float deviation = 0; 
+    float deviation; 
     float average ;
     float count;
+    if(msg->encoding == "32FC1"){
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::TYPE_32FC1);
     img_original_ptr = cv_ptr->image.clone();
+    printf("testing");
     //printf("height : %d", image_height);
     for(int i=0; i<320; i++) {
       for(int j=0; j<480; j++){
@@ -92,7 +94,7 @@ public:
         //fill-out error
         if(cv_ptr->image.at<float>(i,j) > 13. || probability < 10000*0.01) {
           cv_ptr->image.at<float>(i,j) = 0;
-          
+          printf("close");
         }
         else{
             // 노이즈 적용
@@ -101,7 +103,7 @@ public:
             //printf("%f\n", average);
             if(average < 3.){
               deviation = 0.0014 * exp(1.1 * average);
-              //printf("deviation : %f\n", deviation);
+              printf("deviation_close : %f\n", deviation);
               cv_ptr->image.at<float>(i,j) =  gaussianRandom(average, deviation);
               // cv_ptr->image.at<float>(i,j) =  gaussianRandom(average, seg_to_constant[k].constant[0] * exp(seg_to_constant[k].power[0]));
               // deviation = seg_to_constant[k].constant[0] * exp(seg_to_constant[k].power[0] * average);
@@ -109,6 +111,7 @@ public:
             else {
               //deviation = seg_to_constant.constant * exp(seg_to_constant.power * average);
               deviation = seg_to_constant.constant * exp(seg_to_constant.power * average);
+              printf("deviation : %f\n", deviation);
               cv_ptr->image.at<float>(i,j) = gaussianRandom(average, deviation);
               // cv_ptr->image.at<float>(i,j) =  gaussianRandom(average, seg_to_constant[k].constant[1] * exp(seg_to_constant[k].power[1]));
               // deviation = seg_to_constant[k].constant[1] * exp(seg_to_constant[k].power[1] * average);
@@ -127,6 +130,7 @@ public:
     //printf("%f\n", cv_ptr->image.at<float>(100,600));
     // message = cv_bridge::CvImage(std_msgs::Header(), "32FC1", int_image).toImageMsg();
     image_pub_.publish(cv_ptr->toImageMsg());
+    }
   }
   
 };

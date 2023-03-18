@@ -4,4 +4,4 @@ image:
   height: 320
 
 surface:
-  power: 0.1
+  power: 0.05

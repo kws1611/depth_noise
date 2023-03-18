@@ -130,7 +130,7 @@ public:
       }
     }
     printf("ori_dist : %f\n", cv_ptr->image.at<float>(200,200));
-    printf("deviation : %f\n", deviation);
+    //printf("deviation : %f\n", deviation);
     if(!img_old_ptr.empty()){
      printf("old_dist : %f\n", img_old_ptr.at<float>(200,200));
     }
